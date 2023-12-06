@@ -11,3 +11,5 @@ Once you click buy, you can enter some basic details (added validation for a cou
 # Notes
 Ran out of time, but ideally would like to be able to allow customers to chose quantities of products, and add multiple items to a basket to checkout at once with.
 Would also like to add stock keeping, and potentially offers/voucher code functionality. 
+
+![image](https://github.com/rhysgale/RomanPlumbing/assets/10873106/f0e95315-ee95-415b-b6b7-49bc6170300c)
