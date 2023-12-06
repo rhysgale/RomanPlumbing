@@ -21,6 +21,7 @@ namespace ReactApp1.Server.Controllers
         public class ConfirmOrderRequest
         {
             public string ProductReference {  get; set; }
+            public int ProductQuantity { get; set; }
             public Models.Api.Customer Customer { get; set; }
         }
 
@@ -54,7 +55,7 @@ namespace ReactApp1.Server.Controllers
                 throw new Exception("Card declined");
             }
 
-            var orderRef = ordersApi.PlaceOrder(product, request.Customer);
+            var orderRef = ordersApi.PlaceOrder(product, request.ProductQuantity, request.Customer);
             if (orderRef == null)
             {
                 throw new Exception("Failed to place order");

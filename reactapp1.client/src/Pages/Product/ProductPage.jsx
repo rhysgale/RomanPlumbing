@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 export const ProductPage = () => {
     const [product, setProduct] = useState();
+    const [quantity, setQuantity] = useState(1);
+
     const navigate = useNavigate();
 
     const { reference } = useParams();
@@ -19,7 +21,15 @@ export const ProductPage = () => {
     }, [])
 
     const buyClicked = () => {
-        navigate("/Checkout/" + reference);
+        if (quantity > 0) {
+            navigate("/Checkout/" + reference + "/" + quantity); //not ideal passing a quantity through like this... should be stored in a session cookie
+        }
+    }
+
+    const updateQuantity = (newQty) => {
+        if (quantity >= 0 && !isNaN(+newQty)) {
+            setQuantity(newQty);
+        }
     }
 
     return (
@@ -34,6 +44,9 @@ export const ProductPage = () => {
                     <h1>{product?.name}</h1>
                     <p>{product?.description}</p>
                 </div>
+
+                <label htmlFor="cname">Quantity</label>
+                <input type="text" id="quanity" name="cvv" placeholder="352" value={quantity} onChange={(e) => updateQuantity(e.target.value)} />
 
                 <div className="product-price">
                     <span>${product?.price}</span>

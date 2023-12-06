@@ -1,4 +1,5 @@
-﻿using ReactApp1.Server.Helpers.Api;
+﻿using Microsoft.EntityFrameworkCore;
+using ReactApp1.Server.Helpers.Api;
 
 namespace ReactApp1.Server.Api
 {
@@ -11,7 +12,7 @@ namespace ReactApp1.Server.Api
             this.retailContext = retailContext;
         }
 
-        public string PlaceOrder(Models.Api.Product product, Models.Api.Customer customer)
+        public string PlaceOrder(Models.Api.Product product, int quantity, Models.Api.Customer customer)
         {
             // TODO: Separate customer and order creation. 
             // This isn't an ideal way of creating an order
@@ -44,7 +45,8 @@ namespace ReactApp1.Server.Api
                     {
                         LineAmount = product.Price,
                         ProductName = product.Name,
-                        ProductSku = product.ProductSku
+                        ProductSku = product.ProductSku,
+                        Quantity = quantity
                     }
                 }
             };
@@ -57,7 +59,10 @@ namespace ReactApp1.Server.Api
 
         public Models.Api.Order GetOrder(string orderRef)
         {
-            var dbOrder = retailContext.Orders.First(x => x.OrderReference == orderRef);
+            var dbOrder = retailContext.Orders
+                    .Include(x => x.Details)
+                    .Include(x => x.Address)
+                    .First(x => x.OrderReference == orderRef);
 
             return dbOrder.DbOrderToApiOrder();
         }

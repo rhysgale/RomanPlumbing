@@ -24,10 +24,25 @@ export const OrderSummary = () => {
 
             <div className="right-column">
                 <div className="product-description">
-                    <span>Thank you for your order. Your order reference is: {order?.orderReference}</span>
+                    <span>Thank you for your order. </span>
+                    <span>Your order reference is: {order?.orderReference}</span>
                 </div>
-                <div className="product-description">
-                    <span>You have ordered {order?.productName}</span>
+                {
+                    order?.summaryLines?.map((line, ix) => {
+                        return (
+                            <>
+                                <div key={ix} className="product-description">
+                                    <span>You have ordered {line?.productName} x{line?.quantity}</span>
+                                </div>
+                                <div key={ix} className="product-description">
+                                    <span>Cost: ${line?.lineAmount}</span>
+                                </div>
+                            </>
+                        )
+                    })
+                }
+                <div>
+                    Total order cost: { order?.orderTotal }
                 </div>
             </div>
         </main>

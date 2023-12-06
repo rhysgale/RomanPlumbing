@@ -15,7 +15,7 @@ export default function App() {
                     <Route path='' element={<MainPage />} />
                     <Route path='/catalogue' element={<CatalogPage /> } />
                     <Route path='/product/:reference' element={<ProductPage />} />
-                    <Route path='/checkout/:reference' element={<Checkout /> } />
+                    <Route path='/checkout/:reference/:quantity' element={<Checkout /> } />
                     <Route path='/ordersummary/:reference' element={<OrderSummary/>} />
                 </Route>
             </Routes>

@@ -7,7 +7,7 @@ import "./Checkout.css"
 
 export const Checkout = () => {
     const navigate = useNavigate();
-    const { reference } = useParams();
+    const { reference, quantity } = useParams();
 
     const [validationErrors, setValidationErrors] = useState([]);
 
@@ -63,7 +63,7 @@ export const Checkout = () => {
 
     const confirmPurchase = () => {
         if (validatePage()) {
-            var model = { Customer: customer, ProductReference: reference }
+            var model = { Customer: customer, ProductReference: reference, ProductQuantity: quantity }
 
             fetch('https://localhost:7044/Order/ConfirmOrder/', {
                 method: "POST",

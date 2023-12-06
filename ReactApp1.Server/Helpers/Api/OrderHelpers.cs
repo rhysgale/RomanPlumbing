@@ -9,7 +9,8 @@
                 OrderDetails = order.Details.Select(detail => new Models.Api.OrderDetail
                 {
                     LineAmount = detail.LineAmount,
-                    ProductName = detail.ProductName
+                    ProductName = detail.ProductName,
+                    Quantity = detail.Quantity
                 }),
                 Address = new Models.Api.Address()
                 {
@@ -24,12 +25,16 @@
 
         public static Models.Endpoints.OrderSummary ApiOrderToEndpointOrderSummary(this Models.Api.Order order)
         {
-            // For simplicity, just use the top order detail
             return new Models.Endpoints.OrderSummary
             {
                 OrderReference = order.OrderReference,
-                ProductName = order.OrderDetails.FirstOrDefault()?.ProductName ?? string.Empty,
-                TotalCost = order.OrderDetails.FirstOrDefault()?.LineAmount ?? 0
+                OrderTotal = order.OrderDetails.Sum(x => x.LineAmount),
+                SummaryLines = order.OrderDetails.Select(x => new Models.Endpoints.SummaryLine
+                { 
+                    ProductName = x.ProductName,
+                    LineAmount = x.LineAmount,
+                    Quantity = x.Quantity
+                })
             };
         }
     }

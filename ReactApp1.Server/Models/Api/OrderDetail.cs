@@ -4,5 +4,6 @@
     {
         public string ProductName { get; set; }
         public decimal LineAmount { get; set; }
+        public int Quantity { get; internal set; }
     }
 }
